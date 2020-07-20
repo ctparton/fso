@@ -77,3 +77,8 @@ const object1 = {
   }
 
   const square = p => p * p
+
+
+  // Contrary to other languages, in Javascript the value of this is defined based on how the method is called. 
+  // When calling the method through a reference the value of this becomes the so-called global object and the end result 
+  // is often not what the software developer had originally intended.
