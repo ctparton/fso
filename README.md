@@ -5,6 +5,6 @@ For learning React, Redux, Node.js, Cypress and GraphQl
 ## Progress 
 
 Start Date: 21/06
-Current Progress: https://fullstackopen.com/en/part1/java_script
+Current Progress: https://fullstackopen.com/en/part2/rendering_a_collection_modules
 
-- Passing Event Handlers to Child Components
+- Rendering a collection, modules
