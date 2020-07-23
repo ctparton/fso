@@ -20,7 +20,7 @@ const App = (props) => {
       <Button clickHandle={() => generateRandom()} text={"Next Anecdote"}></Button>
       <Button clickHandle={() => voteForAnecdote(selected)} text={"Vote"}></Button>
       <h1>Anecdote with the most votes</h1>
-      <p>{anecdotes[points.indexOf(Math.max(...points))]} with {points.indexOf(Math.max(...points))} v</p>
+      <p>{anecdotes[points.indexOf(Math.max(...points))]} with {points.indexOf(Math.max(...points))} points</p>
     </div>
   )
 }
