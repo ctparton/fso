@@ -1,14 +1,10 @@
 {
   "persons": [
     {
-      "name": "Dan Abramov",
-      "number": "10100101",
-      "id": 3
-    },
-    {
-      "name": "Mary Poppendieck",
-      "number": "39-23-6423122",
-      "id": 4
+      "name": "Callum",
+      "key": "Callum",
+      "number": "08443332",
+      "id": 1
     }
   ]
 }
