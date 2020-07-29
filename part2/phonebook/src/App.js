@@ -46,13 +46,12 @@ const App = () => {
               setNotificatonMessage({text: `${error} Data on ${newName} has already been removed from the server`,  success: false})
               setTimeout(() => setNotificatonMessage(null), 10000) 
             })
-        
       } 
     } else {
-      setPersons(persons.concat(newPerson)) 
       phonebookService.addContact(newPerson)
             .then(response => {
               console.log(response)
+              setPersons(persons.concat({...newPerson, id: response.id})) 
               setNotificatonMessage({text: `Added ${newPerson.name}`,  success: true})
               setTimeout(() => setNotificatonMessage(null), 5000)
             })
