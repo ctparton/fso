@@ -56,7 +56,8 @@ const App = () => {
               setTimeout(() => setNotificatonMessage(null), 5000)
             })
             .catch(error => {
-              setNotificatonMessage({text: `${error} Could not add ${newPerson.name} `, success: false})
+              console.log(error)
+              setNotificatonMessage({text: `${error.response.data.error} Could not add ${newPerson.name} `, success: false})
               setTimeout(() => setNotificatonMessage(null), 5000)
             })
     }
