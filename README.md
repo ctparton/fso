@@ -5,6 +5,13 @@ For learning React, Redux, Node.js, Cypress and GraphQl
 ## Progress 
 
 Start Date: 21/06
-Current Progress: https://fullstackopen.com/en/part2/altering_data_in_server
+Current Progress: https://fullstackopen.com/en/part5/login_in_frontend
 
-- Rendering a collection, modules
+Covered so far: 
+
+* React, Axios, Async/Await, then and Promises
+* Heroku, deploying static pages
+* Node, Express
+* Mongo DB (Mongoose) 
+* Authentication (Bearer, Jsonwebtoken, bcrypt)
+* Testing (Supertest, jest)
