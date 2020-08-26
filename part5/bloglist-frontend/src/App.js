@@ -3,7 +3,7 @@ import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import UserInfo from './components/UserInfo'
 import CreateBlogForm from './components/CreateBlogForm'
-import Togglable from "./components/Togglable"
+import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort((a,b) => b.likes - a.likes ))
-    )  
+    )
   }, [])
 
   const loginHandler = async (credentials) => {
@@ -25,17 +25,17 @@ const App = () => {
       const response = await loginService.login(credentials)
       window.localStorage.setItem('user', JSON.stringify(response))
       setUser(response)
-      notifyUser({text: `${response.name} is now logged in`, success: true})
+      notifyUser({ text: `${response.name} is now logged in`, success: true })
     } catch (error) {
-      notifyUser({text: `Username or password incorrect`, success: false})
+      notifyUser({ text: 'Username or password incorrect', success: false })
     }
   }
 
   const handleLikes = async (blog) =>  {
-    const response = await blogService.likeBlog({...blog, likes: blog.likes + 1})
+    const response = await blogService.likeBlog({ ...blog, likes: blog.likes + 1 })
     setBlogs(blogs
-                .map(b => b.id === blog.id ? {...b, likes: b.likes + 1} : b)
-                .sort((a,b) => b.likes - a.likes))
+      .map(b => b.id === blog.id ? { ...b, likes: b.likes + 1 } : b)
+      .sort((a,b) => b.likes - a.likes))
     console.log(response)
   }
 
@@ -48,11 +48,11 @@ const App = () => {
         const response = await blogService.deleteBlog(blog)
         console.log(response)
         setBlogs(blogs
-                    .filter(b => b.id !== blog.id)
-                    .sort((a,b) => b.likes - a.likes))
-        notifyUser({text: `${blog.title} deleted successfully`, success: true})
+          .filter(b => b.id !== blog.id)
+          .sort((a,b) => b.likes - a.likes))
+        notifyUser({ text: `${blog.title} deleted successfully`, success: true })
       } catch (error) {
-        notifyUser({text: error.response.data.error, success: false})
+        notifyUser({ text: error.response.data.error, success: false })
       }
 
     }
@@ -64,34 +64,34 @@ const App = () => {
     try {
       const response = await blogService.newBlog(newBlog)
       setBlogs(blogs.concat(response))
-      notifyUser({text: `New blog created successfully`, success: true})
+      notifyUser({ text: 'New blog created successfully', success: true })
       blogRef.current.toggleVisibility()
     } catch (error) {
-      notifyUser({text: error.message, success: false})
+      notifyUser({ text: error.message, success: false })
     }
   }
 
   const notifyUser = (message) => {
-    setNotificationMessage({text: message.text, success: message.success})
+    setNotificationMessage({ text: message.text, success: message.success })
     setTimeout(() => setNotificationMessage(null), 5000)
   }
   return (
     <div>
       <h1>Bloglist: A list of your favourite blogs!</h1>
       {<Notification message={notificationMessage}></Notification>}
-      {user === null ?  
-          <div>
-            <LoginForm handleLogin={loginHandler}/>
-            <p>Please sign in to view blogs</p>
+      {user === null ?
+        <div>
+          <LoginForm handleLogin={loginHandler}/>
+          <p>Please sign in to view blogs</p>
         </div>
-          : <div> 
-              <UserInfo name={user.name} logoutHandle={setUser}></UserInfo>
-              <Togglable buttonLabel="New blog" ref={blogRef}>
-                <CreateBlogForm newBlogHandle={createBlogHandle}></CreateBlogForm>
-              </Togglable>
+        : <div>
+          <UserInfo name={user.name} logoutHandle={setUser}></UserInfo>
+          <Togglable buttonLabel="New blog" ref={blogRef}>
+            <CreateBlogForm newBlogHandle={createBlogHandle}></CreateBlogForm>
+          </Togglable>
 
-              <Blogs blogs={blogs} likeHandler={handleLikes} deleteHandler={handleDelete}></Blogs>
-            </div>}
+          <Blogs blogs={blogs} likeHandler={handleLikes} deleteHandler={handleDelete}></Blogs>
+        </div>}
     </div>
   )
 }
