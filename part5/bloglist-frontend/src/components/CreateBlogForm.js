@@ -13,11 +13,11 @@ const CreateBlogForm = ({ newBlogHandle }) => {
     setUrl('')
   }
   return(
-    <div>
+    <div className="createFormDiv">
       <form onSubmit={addNewBlog}>
-                title <input value={blogTitle} onChange={({ target }) => setBlogTitle(target.value)}></input>
-                author <input value={author} onChange={({ target }) => setAuthor(target.value)}></input>
-                url <input value={url} onChange={({ target }) => setUrl(target.value)}></input>
+                title <input id="title" value={blogTitle} onChange={({ target }) => setBlogTitle(target.value)}></input>
+                author <input id="author" value={author} onChange={({ target }) => setAuthor(target.value)}></input>
+                url <input id="url" value={url} onChange={({ target }) => setUrl(target.value)}></input>
         <button>Create</button>
       </form>
     </div>
