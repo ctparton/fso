@@ -7,7 +7,7 @@ const Blog = ({ blog, likeHandler, deleteHandler }) => {
     detailVisible ?
       <div className="blogComponent">
         <p>{blog.title} by {blog.author}</p>
-        <p>likes: {blog.likes} </p> <button onClick={() => likeHandler(blog)}>Like</button>
+        <p className="likeText"> likes: {blog.likes} </p> <button className="likeButton" onClick={() => likeHandler(blog)}>Like</button>
         <p>URL: {blog.url} </p>
         <button onClick={() => deleteHandler(blog)}>Delete</button>
         <button onClick={() => setDetailVisible(!detailVisible)}>Hide</button>
@@ -15,7 +15,7 @@ const Blog = ({ blog, likeHandler, deleteHandler }) => {
       </div> :
       <div>
         <p>{blog.title} by {blog.author}</p>
-        <button onClick={() => setDetailVisible(!detailVisible)}>Show</button>
+        <button className="showButton" onClick={() => setDetailVisible(!detailVisible)}>Show</button>
       </div>
   )
 }

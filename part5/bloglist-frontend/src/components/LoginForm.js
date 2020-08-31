@@ -14,10 +14,10 @@ const LoginForm = ({ handleLogin }) => {
     setPassword('')
   }
   return(
-    <div>
+    <div className="loginForm">
       <form onSubmit={loginUser}>
-          username <input value={username} onChange={({ target }) => setUsername(target.value)} />
-          password <input type="password" value={password} onChange={({ target }) => setPassword(target.value)}/>
+          username <input id="username" value={username} onChange={({ target }) => setUsername(target.value)} />
+          password <input id="password" type="password" value={password} onChange={({ target }) => setPassword(target.value)}/>
         <button>login</button>
       </form>
     </div>
