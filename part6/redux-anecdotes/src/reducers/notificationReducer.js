@@ -5,9 +5,10 @@ export const setNotification = (message, timeout) => {
         dispatch({
             type: 'SET_NOTIFICATION',
             notification: message})
-        await setTimeout(() => dispatch({
+        const id = await setTimeout(() => dispatch({
             type: "REMOVE_NOTIFICATION",
             notification: ""}), timeout)
+        // clearTimeout(id)
 
     }
 }
