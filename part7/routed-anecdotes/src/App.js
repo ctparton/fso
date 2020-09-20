@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {BrowserRouter as Router, Switch, Link, Route, useRouteMatch} from 'react-router-dom';
+import {Switch, Route, useRouteMatch} from 'react-router-dom';
 import AnecdoteList from "./components/AnecdoteList";
 import About from "./components/About";
 import Footer from "./components/Footer";
@@ -7,6 +7,7 @@ import Menu from "./components/Menu";
 import CreateNew from "./components/CreateNew";
 import Anecdote from "./components/Anecdote";
 import Notification from "./components/Notification"
+
 
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
@@ -35,19 +36,19 @@ const App = () => {
     setTimeout(() => setNotification(""), 5000)
   }
 
-  const anecdoteById = (id) =>
-    anecdotes.find(a => a.id === id)
+  // const anecdoteById = (id) =>
+  //   anecdotes.find(a => a.id === id)
 
-  const vote = (id) => {
-    const anecdote = anecdoteById(id)
-
-    const voted = {
-      ...anecdote,
-      votes: anecdote.votes + 1
-    }
-
-    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  }
+  // const vote = (id) => {
+  //   const anecdote = anecdoteById(id)
+  //
+  //   const voted = {
+  //     ...anecdote,
+  //     votes: anecdote.votes + 1
+  //   }
+  //
+  //   setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
+  // }
 
   const match = useRouteMatch("/anecdotes/:id")
     console.log(match)
@@ -55,8 +56,9 @@ const App = () => {
   const selectedAnecdote = match ? anecdotes.find(anecdote => anecdote.id === match.params.id) : null
     console.log(selectedAnecdote)
   return (
-    <div>
-      <Notification message={notification}></Notification>
+    <div className='container'>
+        {notification.length > 1 ? <Notification message={notification}></Notification> : null}
+
       <h1>Software anecdotes</h1>
            <Menu />
            <Switch>
