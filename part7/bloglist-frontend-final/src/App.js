@@ -9,12 +9,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import {useDispatch, useSelector} from "react-redux";
 import {removeNotification, setNotification} from "./reducers/notificationReducer";
-import {init, create} from "./reducers/blogReducer";
+import {init} from "./reducers/blogReducer";
 
 const App = () => {
     const [user, setUser] = useState(null)
-    const blogRef = useRef()
     const dispatch = useDispatch()
+    const blogRef = useRef()
     const blogs = useSelector(state => state.blogs.sort((a,b) => b.likes - a.likes ))
 
     useEffect(() => {
@@ -41,15 +41,6 @@ const App = () => {
         }
     }
 
-    const createBlogHandle = async (newBlog) => {
-        try {
-            dispatch(create(newBlog))
-            notifyUser({ text: 'New blog created successfully', success: true })
-            blogRef.current.toggleVisibility()
-        } catch (error) {
-            notifyUser({ text: error.message, success: false })
-        }
-    }
 
     const notifyUser = (message) => {
         dispatch(setNotification(message.text))
@@ -67,7 +58,7 @@ const App = () => {
                 : <div>
                     <UserInfo name={user.name} logoutHandle={setUser}></UserInfo>
                     <Togglable buttonLabel="New blog" ref={blogRef}>
-                        <CreateBlogForm newBlogHandle={createBlogHandle}></CreateBlogForm>
+                        <CreateBlogForm switchVisibility={() => blogRef.current.toggleVisibility()}></CreateBlogForm>
                     </Togglable>
 
                     <Blogs blogs={blogs}></Blogs>
