@@ -9,21 +9,17 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import {useDispatch, useSelector} from "react-redux";
 import {removeNotification, setNotification} from "./reducers/notificationReducer";
-import {init} from "./reducers/blogReducer";
+import {init, create} from "./reducers/blogReducer";
 
 const App = () => {
-    const [blogs, setBlogs] = useState([])
     const [user, setUser] = useState(null)
     const blogRef = useRef()
     const dispatch = useDispatch()
-    const blogss = useSelector(state => state.blogs.sort((a,b) => b.likes - a.likes ))
+    const blogs = useSelector(state => state.blogs.sort((a,b) => b.likes - a.likes ))
 
     useEffect(() => {
         dispatch(init())
-        // setBlogs(blogss)
-        // blogService.getAll().then(blogs =>
-        //     setBlogs( blogs.sort((a,b) => b.likes - a.likes ))
-        // )
+
     }, [])
 
     useEffect(() => {
@@ -45,39 +41,9 @@ const App = () => {
         }
     }
 
-    const handleLikes = async (blog) =>  {
-        const response = await blogService.likeBlog({ ...blog, likes: blog.likes + 1 })
-        setBlogs(blogs
-            .map(b => b.id === blog.id ? { ...b, likes: b.likes + 1 } : b)
-            .sort((a,b) => b.likes - a.likes))
-        console.log(response)
-    }
-
-    const handleDelete = async (blog)  => {
-        console.log(blog)
-        if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
-            console.log(`User wishes to delete ${blog.id}`)
-            try {
-                blogService.setToken(JSON.parse(window.localStorage.getItem('user')).token)
-                const response = await blogService.deleteBlog(blog)
-                console.log(response)
-                setBlogs(blogs
-                    .filter(b => b.id !== blog.id)
-                    .sort((a,b) => b.likes - a.likes))
-                notifyUser({ text: `${blog.title} deleted successfully`, success: true })
-            } catch (error) {
-                notifyUser({ text: error.response.data.error, success: false })
-            }
-
-        }
-    }
-
     const createBlogHandle = async (newBlog) => {
-        const data =  JSON.parse(window.localStorage.getItem('user'))
-        blogService.setToken(data.token)
         try {
-            const response = await blogService.newBlog(newBlog)
-            setBlogs(blogs.concat(response))
+            dispatch(create(newBlog))
             notifyUser({ text: 'New blog created successfully', success: true })
             blogRef.current.toggleVisibility()
         } catch (error) {
@@ -104,7 +70,7 @@ const App = () => {
                         <CreateBlogForm newBlogHandle={createBlogHandle}></CreateBlogForm>
                     </Togglable>
 
-                    <Blogs blogs={blogss} likeHandler={handleLikes} deleteHandler={handleDelete}></Blogs>
+                    <Blogs blogs={blogs}></Blogs>
                 </div>}
         </div>
     )
