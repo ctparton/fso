@@ -7,7 +7,7 @@ const UserInfo = ({ name }) => {
   const dispatch = useDispatch()
   return (
     <div>
-      <h2>{name} is logged in</h2>
+      <p>{name} is logged in</p>
       <button onClick={()  => {
         window.localStorage.clear()
         dispatch(saveUser(null))

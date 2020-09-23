@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {useDispatch} from "react-redux";
 import {like, deleteBlog} from "../reducers/blogReducer";
+import { useParams} from 'react-router-dom'
 
-const Blog = ({ blog}) => {
-  const [detailVisible, setDetailVisible] = useState(false)
+const Blog = ({ blogs}) => {
   const dispatch = useDispatch()
-
+  const id = useParams().id
+  const blog = blogs.find(b => b.id === id)
   const handleDelete = (blog) => {
       if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
           console.log(`User wishes to delete ${blog.id}`)
@@ -18,18 +19,11 @@ const Blog = ({ blog}) => {
       }
   }
   return (
-    detailVisible ?
       <div className="blogComponent">
         <p>{blog.title} by {blog.author}</p>
         <p className="likeText"> likes: {blog.likes} </p> <button className="likeButton" onClick={() => dispatch(like(blog))}>Like</button>
         <p>URL: {blog.url} </p>
         <button onClick={() => (handleDelete(blog))}>Delete</button>
-        <button onClick={() => setDetailVisible(!detailVisible)}>Hide</button>
-
-      </div> :
-      <div>
-        <p>{blog.title} by {blog.author}</p>
-        <button className="showButton" onClick={() => setDetailVisible(!detailVisible)}>Show</button>
       </div>
   )
 }

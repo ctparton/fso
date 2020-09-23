@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import Blogs from './components/Blogs'
 import LoginForm from './components/LoginForm'
 import UserInfo from './components/UserInfo'
+import User from "./components/User";
 import CreateBlogForm from './components/CreateBlogForm'
+import Blog from "./components/Blog";
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import Users from "./components/Users";
@@ -12,14 +14,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeNotification, setNotification} from "./reducers/notificationReducer";
 import {init} from "./reducers/blogReducer";
 import {saveUser} from "./reducers/userReducer";
+import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom";
+import Menu from "./components/Menu";
+import {initUserAccounts} from "./reducers/userAccountsReducer";
 
 const App = () => {
-    // const [user, setUser] = useState(null)
     const dispatch = useDispatch()
     const blogRef = useRef()
     const blogs = useSelector(state => state.blogs.sort((a,b) => b.likes - a.likes ))
     const user = useSelector(state => state.user)
-
+    const users = useSelector(state => state.accounts)
     useEffect(() => {
         dispatch(init())
 
@@ -32,6 +36,10 @@ const App = () => {
             dispatch(saveUser(user))
             blogService.setToken(user.token)
         }
+    }, [])
+
+    useEffect(() => {
+        dispatch(initUserAccounts())
     }, [])
     const loginHandler = async (credentials) => {
         try {
@@ -50,24 +58,46 @@ const App = () => {
         setTimeout(() => dispatch(removeNotification()), 5000)
     }
     return (
-        <div>
+        <Router>
+            <Menu></Menu>
             <h1>Bloglist: A list of your favourite blogs!</h1>
             {<Notification></Notification>}
-            {user === null ?
-                <div>
-                    <LoginForm handleLogin={loginHandler}/>
-                    <p>Please sign in to view blogs</p>
-                </div>
-                : <div>
-                    <UserInfo name={user.name}></UserInfo>
-                    <Togglable buttonLabel="New blog" ref={blogRef}>
-                        <CreateBlogForm switchVisibility={() => blogRef.current.toggleVisibility()}></CreateBlogForm>
-                    </Togglable>
-
-                    <Blogs blogs={blogs}></Blogs>
+            <Switch>
+                <Route path="/users/:id">
+                    <User users={users}></User>
+                </Route>
+                <Route  path="/blogs/:id">
+                    <Blog blogs={blogs}></Blog>
+                </Route>
+                <Route path="/users">
                     <Users></Users>
-                </div>}
-        </div>
+                </Route>
+                <Route path="/blogs">
+                    {user === null ?
+                        <div>
+                            <LoginForm handleLogin={loginHandler}/>
+                            <p>Please sign in to view blogs</p>
+                        </div>
+                        : <div>
+                            <Blogs blogs={blogs}></Blogs>
+                        </div>}
+                </Route>
+                <Route path="/create">
+                    {user === null ?
+                        <div>
+                            <LoginForm handleLogin={loginHandler}/>
+                            <p>Please sign in to create blogs</p>
+                        </div>
+                        : <div>
+                            <Togglable buttonLabel="New blog" ref={blogRef}>
+                                <CreateBlogForm switchVisibility={() => blogRef.current.toggleVisibility()}></CreateBlogForm>
+                            </Togglable>
+
+                        </div>}
+                </Route>
+            </Switch>
+        </Router>
+
     )
 }
 
