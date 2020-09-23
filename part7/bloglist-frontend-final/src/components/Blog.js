@@ -2,11 +2,18 @@ import React, { useState } from 'react'
 import {useDispatch} from "react-redux";
 import {like, deleteBlog} from "../reducers/blogReducer";
 import { useParams} from 'react-router-dom'
+import Comments from "./Comments";
 
 const Blog = ({ blogs}) => {
   const dispatch = useDispatch()
   const id = useParams().id
   const blog = blogs.find(b => b.id === id)
+
+  if (!blog) {
+      return null
+  }
+
+
   const handleDelete = (blog) => {
       if (window.confirm(`Are you sure you want to delete ${blog.title}?`)) {
           console.log(`User wishes to delete ${blog.id}`)
@@ -24,6 +31,8 @@ const Blog = ({ blogs}) => {
         <p className="likeText"> likes: {blog.likes} </p> <button className="likeButton" onClick={() => dispatch(like(blog))}>Like</button>
         <p>URL: {blog.url} </p>
         <button onClick={() => (handleDelete(blog))}>Delete</button>
+        <Comments blog={blog}></Comments>
+
       </div>
   )
 }

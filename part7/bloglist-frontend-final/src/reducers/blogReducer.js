@@ -1,4 +1,5 @@
 import blogService from "../services/blogs";
+import commentsService from "../services/comments";
 
 const reducer = (state = [], action) => {
     switch (action.type) {
@@ -14,6 +15,9 @@ const reducer = (state = [], action) => {
             return state
                     .filter(b => b.id !== action.data.id)
                     .sort((a,b) => b.likes - a.likes)
+        case 'COMMENT':
+            return state
+                .map(blog => blog.id === action.data.id ? {...action.data, comments: action.data.comments.concat({comment: action.comment, blog: action.data.id})} : blog)
         default:
             return state
     }
@@ -62,4 +66,14 @@ export const deleteBlog = (blogToDelete) => {
     }
 }
 
+export const commentBlog = (blogToComment, comment) => {
+    return async (dispatch) => {
+        await commentsService.newComment({comment, blog: blogToComment.id})
+        dispatch({
+            type: 'COMMENT',
+            data: blogToComment,
+            comment: comment
+        })
+    }
+}
 export default reducer
