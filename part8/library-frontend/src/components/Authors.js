@@ -11,7 +11,10 @@ const Authors = (props) => {
 
 
   if (result.loading)  {
-    return <div>loading...</div>
+    return (
+        <div>loading...</div>
+    )
+
   }
 
     return (
@@ -28,16 +31,16 @@ const Authors = (props) => {
               books
             </th>
           </tr>
-          {result.data.allAuthors.map(a =>
+          {result.data ? result.data.allAuthors.map(a =>
             <tr key={a.name}>
               <td>{a.name}</td>
               <td>{a.born}</td>
               <td>{a.bookCount}</td>
             </tr>
-          )}
+          ) : null}
         </tbody>
       </table>
-      <AuthorAdmin authors={result.data.allAuthors}></AuthorAdmin>
+      {result.data ? <AuthorAdmin authors={result.data.allAuthors}></AuthorAdmin> : null}
     </div>
   )
 }
