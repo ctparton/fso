@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useMutation} from "@apollo/client";
-import {LOGIN} from "../queries";
+import {ALL_AUTHORS, ALL_BOOKS, LOGIN, ME} from "../queries";
 
 const Login = ({ show, setToken, setPage }) => {
     const [username, setUsername] = useState([])
     const [password, setPassword] = useState([])
     const [login, {data}] = useMutation(LOGIN, {
-        refetchQueries: [{query: ALL_BOOKS}, {query: ALL_AUTHORS}],
+        refetchQueries: [{query: ME}],
         onError: error => console.log(error)
     })
     const myStorage = window.localStorage;
@@ -16,6 +16,7 @@ const Login = ({ show, setToken, setPage }) => {
             myStorage.setItem('current-user', data.login.value)
             setPage(null)
         }
+        // eslint-disable-next-line
     }, [data])
     if (!show) {
         return null

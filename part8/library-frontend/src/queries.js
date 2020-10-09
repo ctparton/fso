@@ -18,6 +18,7 @@ export const ALL_BOOKS = gql`
                 name
             }
             published
+            genres
         }
     }
 `
@@ -49,6 +50,15 @@ export const LOGIN = gql`
     mutation loginUser($username: String!, $password: String!) {
         login(username: $username, password: $password) {
             value
+        }
+    }
+`
+
+export const ME = gql`
+    query {
+        me {
+            username,
+            favoriteGenre
         }
     }
 `

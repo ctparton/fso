@@ -6,7 +6,7 @@ import {EDIT_BORN, ALL_AUTHORS, ALL_BOOKS} from "../queries";
 const AuthorAdmin = ({authors}) => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [born, setBorn] = useState('')
-    const [editBorn, {data}] = useMutation(EDIT_BORN, {
+    const [editBorn] = useMutation(EDIT_BORN, {
         refetchQueries: [{query: ALL_BOOKS}, {query: ALL_AUTHORS}],
         onError: error => console.log(error)
     })
