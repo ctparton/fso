@@ -15,7 +15,6 @@ const AuthorAdmin = ({authors}) => {
     }
     let options = []
     authors.forEach(author => options.push({value: author.name, label: author.name}))
-    console.log(authors)
     return (
         <div>
             <Select defaultValue={selectedOption} onChange={setSelectedOption} options={options}/>

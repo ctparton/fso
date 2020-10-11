@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useQuery} from "@apollo/client";
 import { ALL_BOOKS, ME} from "../queries";
+import {Typography} from "@material-ui/core";
 
 const Recommended = ({show}) => {
     const result = useQuery(ALL_BOOKS)
@@ -17,9 +18,9 @@ const Recommended = ({show}) => {
     resultMe.data ? console.log(resultMe.data) : console.log('not ready')
     return (
         <div>
-            <h2>books</h2>
-            {resultMe.data ? <p>Your favourite genre is <strong>{resultMe.data.me.favoriteGenre}</strong></p> : null}
-            <p>Below are recommended books based off your favourite genre</p>
+            <Typography variant="h2">Books</Typography>
+            {resultMe.data ? <Typography>Your favourite genre is <strong>{resultMe.data.me.favoriteGenre}</strong></Typography> : null}
+            <Typography>Below are recommended books based off your favourite genre</Typography>
             <table>
                 <tbody>
                 <tr>
