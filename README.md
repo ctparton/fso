@@ -4,8 +4,7 @@ For learning React, Redux, Node.js, Cypress and GraphQl
 
 ## Progress 
 
-Start Date: 21/06
-Current Progress: https://fullstackopen.com/en/part5/login_in_frontend
+Completed: 11/09
 
 Covered so far: 
 
