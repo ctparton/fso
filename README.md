@@ -1,4 +1,6 @@
-# React Learning
+# React Learning with Full Stack Open 
+
+Course: https://fullstackopen.com/en/
 
 For learning React, Redux, Node.js, Cypress and GraphQl
 
